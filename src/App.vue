@@ -1,14 +1,21 @@
 <template>
-  <div id="app"></div>
+  <div id="app">
+    <router-view></router-view>
+    <main-bar></main-bar>
+  </div>
 </template>
 
 <script>
+import MainBar from "components/content/mainbar/MainBar";
 export default {
   name: "App",
-  components: {}
+  components: {
+    MainBar
+  }
 };
 </script>
 
 <style lang="scss">
-@import "assets/css/base.css";
+@import "../node_modules/normalize.css/normalize.css";
+@import "assets/css/base.scss";
 </style>

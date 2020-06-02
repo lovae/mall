@@ -1,10 +1,3 @@
-$color-text: #666;
-$color-high-text: #ff5777;
-$color-tint: #ff8198;
-$color-background: #fff;
-$font-size: 14px;
-$line-height: 1.5;
-
 :root {
   color: $color-text;
   background: $color-background;
@@ -25,13 +18,13 @@ body {
     "Microsoft YaHei", "微软雅黑", sans-serif, Arial;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  background: var(--color-background);
-  color: var(--color-text);
+  background: $color-background;
+  color: $color-text;
   width: 100vw;
 }
 
 a {
-  color: var(--color-text);
+  color: $color-high-text;
   text-decoration: none;
 }
 .clear-fix::after {

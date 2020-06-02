@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: "Cart",
   data() {
     return {};
   },

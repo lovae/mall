@@ -25,6 +25,11 @@ export default {
 
 <style lang="scss" scoped>
 .nav-bar {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   height: 44px;
   line-height: 44px;

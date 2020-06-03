@@ -21,6 +21,7 @@ body {
   background: $color-background;
   color: $color-text;
   width: 100vw;
+  overflow-x: hidden;
 }
 
 a {
@@ -45,4 +46,16 @@ a {
 
 .right {
   float: right;
+}
+.swiper-pagination-bullet {
+  background-color: #fff !important;
+  opacity: 0.6 !important;
+  box-shadow: 0 1px 4px rgba(#000, 0.3);
+}
+.swiper-pagination-bullet-active {
+  background-color: $color-tint !important;
+}
+img {
+  display: block;
+  width: 100%;
 }

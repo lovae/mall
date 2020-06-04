@@ -5,8 +5,11 @@
     </nav-bar>
     <hm-swiper :bannerlist="bannerlist"></hm-swiper>
     <hm-recommend :reclist="reclist"></hm-recommend>
-    <tab-control :tabtitles="['流行', '新款', '精选']"></tab-control>
-    <div style="height:800px;background:blue">内容填充</div>
+    <tab-control
+      :tabtitles="['流行', '新款', '精选']"
+      @TabClick="TabClick"
+    ></tab-control>
+    <goods-list :goodslist="showGoods"></goods-list>
   </div>
 </template>
 
@@ -16,31 +19,63 @@ import HmRecommend from "./childCompts/HmRecommend";
 
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabcontrol/TabControl";
+import GoodsList from "components/content/goodslist/GoodsList";
 
-import { getHomeMultidata } from "network/home";
+import { getHomeMultidata, getHomeGoods } from "network/home";
 
 export default {
   name: "Home",
   data() {
     return {
       bannerlist: [],
-      reclist: []
+      reclist: [],
+      goods: {
+        pop: { page: 0, list: [] },
+        new: { page: 0, list: [] },
+        sell: { page: 0, list: [] }
+      },
+      itemsArr: ["pop", "new", "sell"],
+      curIndex: 0
     };
   },
   components: {
     HmSwiper,
     HmRecommend,
     NavBar,
-    TabControl
+    TabControl,
+    GoodsList
   },
   created() {
-    getHomeMultidata().then(res => {
-      console.log(res);
-      this.bannerlist = res.data.banner.list;
-      this.reclist = res.data.recommend.list;
-    });
+    // 获取首页图片链接
+    this.getHomeMultidata();
+    // 获取首页商品数据
+    this.getHomeGoods("pop");
+    this.getHomeGoods("new");
+    this.getHomeGoods("sell");
   },
-  methods: {}
+  computed: {
+    showGoods() {
+      return this.goods[this.itemsArr[this.curIndex]].list;
+    }
+  },
+  methods: {
+    TabClick(index) {
+      this.curIndex = index;
+    },
+    getHomeMultidata() {
+      getHomeMultidata().then(res => {
+        this.bannerlist = res.data.banner.list;
+        this.reclist = res.data.recommend.list;
+      });
+    },
+    getHomeGoods(type) {
+      const page = this.goods[type].page + 1;
+      getHomeGoods(type, page).then(res => {
+        this.goods[type].list.push(...res.data.list);
+        this.goods[type].page = page;
+      });
+    }
+  }
 };
 </script>
 

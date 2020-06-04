@@ -32,6 +32,7 @@ export default {
   methods: {
     itemActive(index) {
       this.curIndex = index;
+      this.$emit("TabClick", index);
     }
   }
 };
@@ -39,10 +40,13 @@ export default {
 
 <style lang="scss" scoped>
 .tab-control {
+  position: sticky;
+  top: 40px;
   display: flex;
   line-height: 40px;
   height: 40px;
   text-align: center;
+  background-color: $color-background;
   .item {
     flex: 1;
   }

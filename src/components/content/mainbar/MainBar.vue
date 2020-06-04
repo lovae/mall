@@ -47,11 +47,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("//at.alicdn.com/t/font_1842003_32zvyosyp3u.css");
-.iconfont {
-  font-size: 20px;
-}
-
 .tab-bar-item {
   flex: 1;
   text-align: center;

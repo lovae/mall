@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import NavBar from "components/common/navbar/NavBar";
+import NavBar from "common/navbar/NavBar";
 export default {
   name: "Cart",
   data() {

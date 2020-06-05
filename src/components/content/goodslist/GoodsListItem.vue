@@ -1,7 +1,7 @@
 <template>
   <div class="list-item">
     <div class="img-box">
-      <img :src="item.show.img" />
+      <img :src="item.show.img" @load="imageLoad" />
     </div>
     <div class="item-info">
       <p>{{ item.title }}</p>
@@ -32,7 +32,11 @@ export default {
   },
   components: {},
   created() {},
-  methods: {}
+  methods: {
+    imageLoad() {
+      this.$bus.$emit("itemImageLoad");
+    }
+  }
 };
 </script>
 

@@ -40,8 +40,6 @@ export default {
 
 <style lang="scss" scoped>
 .tab-control {
-  position: sticky;
-  top: 40px;
   display: flex;
   line-height: 40px;
   height: 40px;

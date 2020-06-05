@@ -34,7 +34,6 @@ export default {
   height: 44px;
   line-height: 44px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   .item-left,
   .item-right {
     width: 60px;

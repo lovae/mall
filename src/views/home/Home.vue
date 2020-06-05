@@ -3,13 +3,25 @@
     <nav-bar>
       <div slot="center">购物街</div>
     </nav-bar>
-    <hm-swiper :bannerlist="bannerlist"></hm-swiper>
-    <hm-recommend :reclist="reclist"></hm-recommend>
-    <tab-control
-      :tabtitles="['流行', '新款', '精选']"
-      @TabClick="TabClick"
-    ></tab-control>
-    <goods-list :goodslist="showGoods"></goods-list>
+
+    <scroll
+      class="wrapper"
+      ref="scroll"
+      :probe-type="3"
+      :pull-up-load="true"
+      @scroll="wrapperScroll"
+      @pullingUp="loadMore"
+    >
+      <hm-swiper :bannerlist="bannerlist"></hm-swiper>
+      <hm-recommend :reclist="reclist"></hm-recommend>
+      <tab-control
+        :tabtitles="['流行', '新款', '精选']"
+        @TabClick="TabClick"
+      ></tab-control>
+      <goods-list :goodslist="showGoods"></goods-list>
+    </scroll>
+
+    <back-top @click.native="backTopClick" v-show="isShowTop"></back-top>
   </div>
 </template>
 
@@ -17,9 +29,11 @@
 import HmSwiper from "./childCompts/HmSwiper";
 import HmRecommend from "./childCompts/HmRecommend";
 
-import NavBar from "components/common/navbar/NavBar";
-import TabControl from "components/content/tabcontrol/TabControl";
-import GoodsList from "components/content/goodslist/GoodsList";
+import Scroll from "common/scroll/Scroll";
+import NavBar from "common/navbar/NavBar";
+import TabControl from "content/tabcontrol/TabControl";
+import GoodsList from "content/goodslist/GoodsList";
+import BackTop from "common/backtop/BackTop";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
 
@@ -35,15 +49,18 @@ export default {
         sell: { page: 0, list: [] }
       },
       itemsArr: ["pop", "new", "sell"],
-      curIndex: 0
+      curIndex: 0,
+      isShowTop: false
     };
   },
   components: {
     HmSwiper,
     HmRecommend,
+    Scroll,
     NavBar,
     TabControl,
-    GoodsList
+    GoodsList,
+    BackTop
   },
   created() {
     // 获取首页图片链接
@@ -52,6 +69,11 @@ export default {
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
+
+    // 监听item中每个图片加载完成
+    this.$bus.$on("itemImageLoad", () => {
+      this.$refs.scroll.refresh();
+    });
   },
   computed: {
     showGoods() {
@@ -59,9 +81,22 @@ export default {
     }
   },
   methods: {
+    // 页面事件
     TabClick(index) {
       this.curIndex = index;
     },
+    backTopClick() {
+      this.$refs.scroll.scrollTop(0, 0);
+    },
+    wrapperScroll(position) {
+      this.isShowTop = Math.abs(position.y) > 1000;
+    },
+    loadMore() {
+      this.getHomeGoods(this.itemsArr[this.curIndex]);
+      this.$refs.scroll.finishPullUp();
+    },
+
+    // 网络请求
     getHomeMultidata() {
       getHomeMultidata().then(res => {
         this.bannerlist = res.data.banner.list;
@@ -85,6 +120,10 @@ export default {
   .nav-bar {
     background-color: $color-tint;
     color: #fff;
+  }
+  .wrapper {
+    height: calc(100vh - 93px);
+    overflow: hidden;
   }
 }
 </style>

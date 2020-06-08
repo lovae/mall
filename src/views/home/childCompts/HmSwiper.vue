@@ -2,7 +2,7 @@
   <swiper class="swiper" :options="swiperOption">
     <swiper-slide v-for="(item, index) in bannerlist" :key="index">
       <a :href="item.link">
-        <img :src="item.image" />
+        <img :src="item.image" @load="swiperImgLoad" />
       </a>
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
@@ -39,6 +39,11 @@ export default {
         autoplay: true
       }
     };
+  },
+  methods: {
+    swiperImgLoad() {
+      this.$emit("swiperImgLoad");
+    }
   }
 };
 </script>

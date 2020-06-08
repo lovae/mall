@@ -3,6 +3,13 @@
     <nav-bar>
       <div slot="center">购物街</div>
     </nav-bar>
+    <tab-control
+      :tabtitles="['流行', '新款', '精选']"
+      @TabClick="TabClick"
+      ref="tabControl1"
+      v-show="isTabFixed"
+      class="tab-control"
+    ></tab-control>
 
     <scroll
       class="wrapper"
@@ -12,11 +19,15 @@
       @scroll="wrapperScroll"
       @pullingUp="loadMore"
     >
-      <hm-swiper :bannerlist="bannerlist"></hm-swiper>
+      <hm-swiper
+        :bannerlist="bannerlist"
+        @swiperImgLoad.once="swiperImgLoad"
+      ></hm-swiper>
       <hm-recommend :reclist="reclist"></hm-recommend>
       <tab-control
         :tabtitles="['流行', '新款', '精选']"
         @TabClick="TabClick"
+        ref="tabControl2"
       ></tab-control>
       <goods-list :goodslist="showGoods"></goods-list>
     </scroll>
@@ -51,7 +62,9 @@ export default {
       },
       itemsArr: ["pop", "new", "sell"],
       curIndex: 0,
-      isShowTop: false
+      isShowTop: false,
+      tabOffsetTop: 0,
+      isTabFixed: false
     };
   },
   components: {
@@ -79,24 +92,38 @@ export default {
     });
   },
   computed: {
+    curType() {
+      return this.itemsArr[this.curIndex];
+    },
     showGoods() {
-      return this.goods[this.itemsArr[this.curIndex]].list;
+      return this.goods[this.curType].list;
     }
   },
   methods: {
     // 页面事件
     TabClick(index) {
       this.curIndex = index;
+      // 同步两个tabcontrol中的index
+      this.$refs.tabControl1.curIndex = index;
+      this.$refs.tabControl2.curIndex = index;
     },
     backTopClick() {
       this.$refs.scroll.scrollTop(0, 0);
     },
     wrapperScroll(position) {
+      // 返回顶部
       this.isShowTop = Math.abs(position.y) > 1000;
+      // tabcontrol固定
+      this.isTabFixed = Math.abs(position.y) > this.tabOffsetTop;
     },
     loadMore() {
-      this.getHomeGoods(this.itemsArr[this.curIndex]);
+      this.getHomeGoods(this.curType);
       this.$refs.scroll.finishPullUp();
+    },
+    swiperImgLoad() {
+      this.tabOffsetTop =
+        this.$refs.tabControl2.$el.offsetTop -
+        this.$refs.tabControl2.$el.offsetHeight;
     },
 
     // 网络请求
@@ -119,7 +146,7 @@ export default {
 
 <style lang="scss" scoped>
 #home {
-  padding: 44px 0 49px;
+  padding-bottom: 49px;
   .nav-bar {
     background-color: $color-tint;
     color: #fff;
@@ -127,6 +154,12 @@ export default {
   .wrapper {
     height: calc(100vh - 93px);
     overflow: hidden;
+  }
+  .tab-control {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 9;
   }
 }
 </style>

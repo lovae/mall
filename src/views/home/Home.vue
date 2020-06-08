@@ -36,6 +36,7 @@ import GoodsList from "content/goodslist/GoodsList";
 import BackTop from "common/backtop/BackTop";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
+import { debounce } from "utils/index.js";
 
 export default {
   name: "Home",
@@ -69,10 +70,12 @@ export default {
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
-
+  },
+  mounted() {
     // 监听item中每个图片加载完成
+    const refresh = debounce(this.$refs.scroll.refresh, 100);
     this.$bus.$on("itemImageLoad", () => {
-      this.$refs.scroll.refresh();
+      this.$refs.scroll && refresh();
     });
   },
   computed: {

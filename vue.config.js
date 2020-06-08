@@ -11,6 +11,7 @@ module.exports = {
     resolve: {
       alias: {
         assets: "@/assets",
+        utils: "@/utils",
         common: "@/components/common",
         content: "@/components/content",
         network: "@/network",

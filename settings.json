@@ -1,0 +1,59 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.editor.showTabs": true,
+  "editor.wordWrap": "on",
+  "window.openFilesInNewWindow": "on",
+  "window.zoomLevel": 0,
+  "explorer.confirmDelete": false,
+  "files.associations": {
+    "*.cshtml": "html"
+  },
+  "extensions.ignoreRecommendations": true,
+  "window.openFoldersInNewWindow": "on",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.port": 8080,
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "editor.fontFamily": "'Fira Code'",
+  "workbench.sideBar.location": "right",
+  "workbench.colorTheme": "Material Theme Palenight High Contrast",
+  "editor.renderIndentGuides": false,
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "editor.maxTokenizationLineLength": 20000,
+  "explorer.confirmDragAndDrop": false,
+  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "liveServer.settings.ignoreFiles": [
+    ".vscode/**",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.ts"
+  ],
+  "vetur.format.defaultFormatterOptions": {
+    "prettier": {
+      "semi": false,
+      "singleQuote": true,
+      "tabWidth": 4
+    },
+    "wrap_attributes": "force-aligned"
+  },
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "vetur.format.defaultFormatter.js": "vscode-typescript",
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "prettier.arrowParens": "avoid",
+  "prettier.trailingComma": "none",
+  "git.enableSmartCommit": true,
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "gitlens.views.repositories.location": "gitlens",
+  "gitlens.views.fileHistory.location": "gitlens",
+  "gitlens.views.lineHistory.location": "gitlens",
+  "gitlens.views.compare.location": "gitlens",
+  "gitlens.views.search.location": "gitlens",
+  "gitlens.views.repositories.files.layout": "tree",
+  "editor.formatOnSave": true,
+}

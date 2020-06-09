@@ -1,9 +1,7 @@
 <template>
   <swiper class="swiper" :options="swiperOption">
-    <swiper-slide v-for="(item, index) in bannerlist" :key="index">
-      <a :href="item.link">
-        <img :src="item.image" @load="swiperImgLoad" />
-      </a>
+    <swiper-slide v-for="(item, index) in topImages" :key="index">
+      <img :src="item" />
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
@@ -12,16 +10,11 @@
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/dist/css/swiper.css";
-
 export default {
-  name: "HmSwiper",
+  name: "DetailSwiper",
   title: "Pagination",
-  components: {
-    Swiper,
-    SwiperSlide
-  },
   props: {
-    bannerlist: {
+    topImages: {
       type: Array,
       default() {
         return [];
@@ -39,12 +32,17 @@ export default {
       }
     };
   },
-  methods: {
-    swiperImgLoad() {
-      this.$emit("swiperImgLoad");
-    }
-  }
+  components: {
+    Swiper,
+    SwiperSlide
+  },
+  created() {},
+  methods: {}
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+img {
+  transform: translateY(-25%);
+}
+</style>
